@@ -1,0 +1,61 @@
+CREATE DATABASE IF NOT EXISTS cul_d_ampolla;
+
+USE cul_d_ampolla;
+
+CREATE TABLE IF NOT EXISTS providers (
+  provider_id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  street VARCHAR(100) NOT NULL,
+  number VARCHAR(10) NOT NULL,
+  floor VARCHAR(10),
+  city VARCHAR(50) NOT NULL,
+  zip_code VARCHAR(10) NOT NULL,
+  country VARCHAR(50) NOT NULL,
+  phone_number VARCHAR(20) NOT NULL,
+  fax_number VARCHAR(20)
+);
+
+CREATE TABLE IF NOT EXISTS eyeglasses (
+  eyeglasses_id INT AUTO_INCREMENT PRIMARY KEY,
+  brand VARCHAR(100) NOT NULL,
+  graduation FLOAT NOT NULL,
+  frame_type ENUM('floating', 'paste', 'metallic') NOT NULL,
+  frame_color VARCHAR(20) NOT NULL,
+  glass_color VARCHAR(20) NOT NULL,
+  price FLOAT NOT NULL,
+  provider_id INT NOT NULL,
+  FOREIGN KEY (provider_id) REFERENCES providers(provider_id)
+);
+
+CREATE TABLE IF NOT EXISTS clients (
+  client_id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  street VARCHAR(100) NOT NULL,
+  number VARCHAR(10) NOT NULL,
+  floor VARCHAR(10),
+  city VARCHAR(50) NOT NULL,
+  zip_code VARCHAR(10) NOT NULL,
+  country VARCHAR(50) NOT NULL,
+  phone_number VARCHAR(20) NOT NULL,
+  email VARCHAR(100) NOT NULL,
+  registry_date DATE NOT NULL,
+  recommender_id INT,
+  FOREIGN KEY (recommender_id) REFERENCES clients(client_id)
+);
+
+CREATE TABLE IF NOT EXISTS sales (
+  sale_id INT AUTO_INCREMENT PRIMARY KEY,
+  client_id INT NOT NULL,
+  eyeglasses_id INT NOT NULL,
+  employee_id INT NOT NULL,
+  sale_date DATE NOT NULL,
+  FOREIGN KEY (client_id) REFERENCES clients(client_id),
+  FOREIGN KEY (eyeglasses_id) REFERENCES eyeglasses(eyeglasses_id),
+  FOREIGN KEY (employee_id) references EMPLOYEES(employee_id)
+);
+
+CREATE TABLE IF NOT EXISTS employees (
+  employee_id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL
+);
+
