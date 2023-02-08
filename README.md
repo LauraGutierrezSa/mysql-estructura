@@ -12,3 +12,8 @@ La política de compres de l'òptica es basa que les ulleres d'una marca es comp
 Dels clients/es vol emmagatzemar: El nom, l'adreça postal, el telèfon, el correu electrònic, la data de registre.
 Quan arriba un/a client/a nou, emmagatzemar el/la client/a que li ha recomanat l'establiment (sempre que algú li hagi recomanat).
 El nostre sistema haurà d’indicar qui ha sigut l’empleat/da que ha venut cada ullera. Defineix un període de temps de vendes.
+
+Proves:
+Llista el total de compres d’un client/a.
+Llista les diferents ulleres que ha venut un empleat durant un any.
+Llista els diferents proveïdors que han subministrat ulleres venudes amb èxit per l'òptica.
