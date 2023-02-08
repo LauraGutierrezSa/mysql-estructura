@@ -14,8 +14,11 @@ Quan arriba un/a client/a nou, emmagatzemar el/la client/a que li ha recomanat l
 El nostre sistema haurà d’indicar qui ha sigut l’empleat/da que ha venut cada ullera. Defineix un període de temps de vendes.
 
 Proves:
+
 *Llista el total de compres d’un client/a.
+
 *Llista les diferents ulleres que ha venut un empleat durant un any.
+
 *Llista els diferents proveïdors que han subministrat ulleres venudes amb èxit per l'òptica.
 
 -Exercici 2 - Pizzería: 
@@ -40,5 +43,7 @@ Un usuari/ària pot escriure comentaris en un vídeo determinat. Cada comentari 
 Un usuari/ària pot marcar un comentari com m'agrada o no m'agrada. Caldrà portar un registre dels usuaris/es que han marcat un comentari com m'agrada/no m'agrada, i en quina data/hora ho van fer.
 
 Proves:
+
 *Llista quants productes de tipus “Begudes”. s'han venut en una determinada localitat.
+
 *Llista quantes comandes ha efectuat un determinat empleat/da.
