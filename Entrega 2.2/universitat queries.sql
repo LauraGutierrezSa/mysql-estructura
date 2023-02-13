@@ -278,7 +278,7 @@ SELECT Nombre_Asignatura, Anio_Inicio, Anio_Fin FROM Asignaturas;
 SELECT D.department_name FROM departments D INNER JOIN professors P ON D.department_id = P.department_id LEFT JOIN courses C ON P.professor_id = C.professor_id WHERE C.degree_name = 'Grau Enginyeria informàtica (Pla 2015)' GROUP BY D.department_name;
 
 /* 9 - Retorna un llistat amb tots els alumnes que s'han matriculat en alguna assignatura durant el curs escolar 2018/2019. */
-SELECT Nombre_Alumno FROM Matriculas JOIN Cursos ON Matriculas.ID_Curso = Cursos.ID_Curso WHERE Anio_Inicio = 2018 AND Anio_Fin = 2019;
+SELECT Nombre_Alumno FROM Matriculas JOIN Cursos ON Matriculas.ID_Curso = Cursos.ID_Curso WHERE Anyo_Inicio = 2018 AND Anyo_Fin = 2019;
 
 /* Resol les 6 següents consultes utilitzant les clàusules LEFT JOIN i RIGHT JOIN. */
 
