@@ -210,12 +210,7 @@ INSERT INTO asignatura VALUES (81, 'Genómica y proteómica', 4.5, 'obligatoria'
 INSERT INTO asignatura VALUES (82, 'Procesos biotecnológicos', 6, 'obligatoria', 3, 2, NULL, 7);
 INSERT INTO asignatura VALUES (83, 'Técnicas instrumentales avanzadas', 4.5, 'obligatoria', 3, 2, NULL, 7);
 
-/* Curso escolar */
-INSERT INTO curso_escolar VALUES (1, 2014, 2015);
-INSERT INTO curso_escolar VALUES (2, 2015, 2016);
-INSERT INTO curso_escolar VALUES (3, 2016, 2017);
-INSERT INTO curso_escolar VALUES (4, 2017, 2018);
-INSERT INTO curso_escolar VALUES (5, 2018, 2019);
+ 
 
 /* Alumno se matricula en asignatura */
 INSERT INTO alumno_se_matricula_asignatura VALUES (1, 1, 1);
@@ -257,3 +252,85 @@ INSERT INTO alumno_se_matricula_asignatura VALUES (19, 7, 5);
 INSERT INTO alumno_se_matricula_asignatura VALUES (19, 8, 5);
 INSERT INTO alumno_se_matricula_asignatura VALUES (19, 9, 5);
 INSERT INTO alumno_se_matricula_asignatura VALUES (19, 10, 5);
+
+/* 1 - Retorna un llistat amb el primer cognom, segon cognom i el nom de tots els/les alumnes. El llistat haurà d'estar ordenat alfabèticament de menor a major pel primer cognom, segon cognom i nom. */
+SELECT apellido1, apellido2, nombre FROM alumnos ORDER BY apellido1, apellido2, nombre;
+
+/* 2 - Esbrina el nom i els dos cognoms dels alumnes que no han donat d'alta el seu número de telèfon en la base de dades. */
+SELECT nombre, apellido1, apellido2 FROM alumnos WHERE telefono IS NULL;
+
+/* 3 - Retorna el llistat dels alumnes que van néixer en 1999. */
+SELECT nombre, apellido1, apellido2 FROM alumnos WHERE YEAR(fecha_nacimiento) = 1999;
+
+/* 4 - Retorna el llistat de professors/es que no han donat d'alta el seu número de telèfon en la base de dades i a més el seu NIF acaba en K. */
+SELECT nombre, apellido1, apellido2 FROM profesores WHERE telefono IS NULL AND RIGHT(nif, 1) = 'K';
+
+/* 5 - Retorna el llistat de les assignatures que s'imparteixen en el primer quadrimestre, en el tercer curs del grau que té l'identificador 7. */
+SELECT Nombre_Asignatura FROM Asignaturas WHERE Cuadrimestre = 1 AND ID_Curso = 7;
+
+/* 6 - Retorna un llistat dels professors/es juntament amb el nom del departament al qual estan vinculats. El llistat ha de retornar quatre columnes, primer cognom, segon cognom, nom i nom del departament. El resultat estarà ordenat alfabèticament de menor a major pels cognoms i el nom. */
+SELECT Nombre_Profesor, Nombre_Departamento FROM Profesores JOIN Departamentos ON Profesores.ID_Departamento = Departamentos.ID_Departamento;
+
+/* 7 - Retorna un llistat amb el nom de les assignatures, any d'inici i any de fi del curs escolar de l'alumne/a amb NIF 26902806M. */
+SELECT Nombre_Asignatura, Anio_Inicio, Anio_Fin FROM Asignaturas;
+
+/* 8 - Retorna un llistat amb el nom de tots els departaments que tenen professors/es que imparteixen alguna assignatura en el Grau en Enginyeria Informàtica (Pla 2015). */
+SELECT D.department_name FROM departments D INNER JOIN professors P ON D.department_id = P.department_id LEFT JOIN courses C ON P.professor_id = C.professor_id WHERE C.degree_name = 'Grau Enginyeria informàtica (Pla 2015)' GROUP BY D.department_name;
+
+/* 9 - Retorna un llistat amb tots els alumnes que s'han matriculat en alguna assignatura durant el curs escolar 2018/2019. */
+SELECT Nombre_Alumno FROM Matriculas JOIN Cursos ON Matriculas.ID_Curso = Cursos.ID_Curso WHERE Anio_Inicio = 2018 AND Anio_Fin = 2019;
+
+/* Resol les 6 següents consultes utilitzant les clàusules LEFT JOIN i RIGHT JOIN. */
+
+/* 10 - Retorna un llistat amb els noms de tots els professors/es i els departaments que tenen vinculats. El llistat també ha de mostrar aquells professors/es que no tenen cap departament associat. El llistat ha de retornar quatre columnes, nom del departament, primer cognom, segon cognom i nom del professor/a. El resultat estarà ordenat alfabèticament de menor a major pel nom del departament, cognoms i el nom. */
+SELECT profesores.nombre AS Nombre_del_Profesor, departamentos.nombre AS Nombre_del_Departamento FROM profesores LEFT JOIN departamentos ON profesores.id_departamento = departamentos.id;
+
+/* 11 - Retorna un llistat amb els professors/es que no estan associats a un departament. */
+SELECT profesores.nombre AS Nombre_del_Profesor, departamentos.nombre AS Nombre_del_Departamento FROM profesores LEFT JOIN departamentos ON profesores.id_departamento = departamentos.id WHERE departamentos.nombre IS NULL;
+
+/* 12 - Retorna un llistat amb els departaments que no tenen professors/es associats. */
+SELECT profesores.nombre AS Nombre_del_Profesor, departamentos.nombre AS Nombre_del_Departamento FROM profesores RIGHT JOIN departamentos ON profesores.id_departamento = departamentos.id WHERE profesores.nombre IS NULL;
+
+/* 13 - Retorna un llistat amb els professors/es que no imparteixen cap assignatura. */
+SELECT profesores.nombre AS Nombre_del_Profesor, asignaturas.nombre AS Nombre_de_la_Asignatura FROM profesores LEFT JOIN asignaturas ON profesores.id = asignaturas.id_profesor WHERE asignaturas.nombre IS NULL;
+
+/* 14 - Retorna un llistat amb les assignatures que no tenen un professor/a assignat. */
+SELECT profesores.nombre AS Nombre_del_Profesor, asignaturas.nombre AS Nombre_de_la_Asignatura FROM profesores RIGHT JOIN asignaturas ON profesores.id = asignaturas.id_profesor WHERE profesores.nombre IS NULL;
+
+/* 15 - Retorna un llistat amb tots els departaments que no han impartit assignatures en cap curs escolar. */
+SELECT departamentos.nombre AS Nombre_del_Departamento, asignaturas.nombre AS Nombre_de_la_Asignatura FROM departamentos LEFT JOIN asignaturas ON departamentos.id = asignaturas.id_departamento WHERE asignaturas.nombre IS NULL;
+
+/* Consultes resum: */
+
+/* 16 - Retorna el nombre total d'alumnes que hi ha. */
+SELECT COUNT(*) FROM Alumnos;
+
+/* 17 - Calcula quants alumnes van néixer en 1999. */
+SELECT COUNT(*) FROM Alumnos WHERE YEAR(fechaNacimiento) = 1999;
+
+/* 18 - Calcula quants professors/es hi ha en cada departament. El resultat només ha de mostrar dues columnes, una amb el nom del departament i una altra amb el nombre de professors/es que hi ha en aquest departament. El resultat només ha d'incloure els departaments que tenen professors/es associats i haurà d'estar ordenat de major a menor pel nombre de professors/es. */
+SELECT Nombre_Departamento, COUNT(*) FROM Profesores JOIN Departamentos ON Profesores.ID_Departamento = Departamentos.ID_Departamento GROUP BY Nombre_Departamento;
+
+/* 19 - Retorna un llistat amb tots els departaments i el nombre de professors/es que hi ha en cadascun d'ells. Tingui en compte que poden existir departaments que no tenen professors/es associats. Aquests departaments també han d'aparèixer en el llistat. */
+
+
+/* 20 - Retorna un llistat amb el nom de tots els graus existents en la base de dades i el nombre d'assignatures que té cadascun. Tingues en compte que poden existir graus que no tenen assignatures associades. Aquests graus també han d'aparèixer en el llistat. El resultat haurà d'estar ordenat de major a menor pel nombre d'assignatures. */
+
+
+/* 21 - Retorna un llistat amb el nom de tots els graus existents en la base de dades i el nombre d'assignatures que té cadascun, dels graus que tinguin més de 40 assignatures associades. */
+
+
+/* 22 - Retorna un llistat que mostri el nom dels graus i la suma del nombre total de crèdits que hi ha per a cada tipus d'assignatura. El resultat ha de tenir tres columnes: nom del grau, tipus d'assignatura i la suma dels crèdits de totes les assignatures que hi ha d'aquest tipus. */
+
+
+/* 23 - Retorna un llistat que mostri quants alumnes s'han matriculat d'alguna assignatura en cadascun dels cursos escolars. El resultat haurà de mostrar dues columnes, una columna amb l'any d'inici del curs escolar i una altra amb el nombre d'alumnes matriculats. */
+
+
+/* 24 - Retorna un llistat amb el nombre d'assignatures que imparteix cada professor/a. El llistat ha de tenir en compte aquells professors/es que no imparteixen cap assignatura. El resultat mostrarà cinc columnes: id, nom, primer cognom, segon cognom i nombre d'assignatures. El resultat estarà ordenat de major a menor pel nombre d'assignatures. */
+
+
+/* 25 - Retorna totes les dades de l'alumne/a més jove. */
+SELECT * FROM Alumnos WHERE fechaNacimiento = (SELECT MIN(fechaNacimiento) FROM Alumnos);
+
+/* 26 - Retorna un llistat amb els professors/es que tenen un departament associat i que no imparteixen cap assignatura. */
+SELECT nombre_profesor FROM profesores WHERE id_departamento IS NOT NULL AND id_profesor NOT IN (SELECT id_profesor FROM imparte);
